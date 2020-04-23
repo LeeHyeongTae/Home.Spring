@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Creaters</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+	background-color: #666;
+	padding: 30px;
+	text-align: center;
+	font-size: 35px;
+	color: white;
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+	float: left;
+	width: 30%;
+	height: 300px; /* only for demonstration, should be removed */
+	background: #ccc;
+	padding: 20px;
+}
+
+/* Style the list inside the menu */
+nav ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+article {
+	float: left;
+	padding: 20px;
+	width: 70%;
+	background-color: #f1f1f1;
+	height: 300px; /* only for demonstration, should be removed */
+}
+
+/* Clear floats after the columns */
+section:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Style the footer */
+footer {
+	background-color: #777;
+	padding: 10px;
+	text-align: center;
+	color: white;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media ( max-width : 600px) {
+	nav, article {
+		width: 100%;
+		height: auto;
+	}
+}
+</style>
+</head>
+<body>
+	<header>
+		<h2>회원 가입</h2>
+	</header>
+
+	<section>
+		<nav>
+			<ul>
+
+			</ul>
+		</nav>
+
+		<article>
+			<form action="#">
+				<label>ID </label> <br> <input id="userid" type="text" /> <br>
+				<label>PASSWORD</label><br> <input id="password" type="text" /><br>
+				<label>NAME </label> <br> <input id="name" type="text" /> <br>
+				<label>SSN</label><br> <input id="ssn" type="text" /><br>
+				<label>ADDRESS</label><br> <input id="address" type="text" /><br>
+
+				<input id="join_button" type="button" value="Join"> <input
+					id="cancel_button" type="button" value="Cancel">
+			</form>
+		</article>
+	</section>
+
+	<footer>
+		<p>Footer</p>
+	</footer>
+	<script>
+	$('#join_button')
+		.css('cursor', 'pointer')
+		.click( e=> {
+			e.preventDefault()
+		$.ajax({
+			url:'/member/join',
+			type:'post',
+			data:JSON.stringify({
+				userid:$('#userid').val(),
+				password:$('#password').val(),
+				name:$('#ssn').val(),
+				address:$('#address').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			sucess: d => {
+				if(d === 'SUCCESS'){
+					alert(d)
+					location.href='../index.html'
+				}else{
+					alert(d)
+				}
+			},
+			error: (req, status, error) => {
+				alert(req.status + '\n' + req.reponseText + '\n' + error)
+			}
+		})
+		})
+	$('cancel_button')
+		.css('cursor', 'pointer')
+		.click( e=> {
+			e.preventDefault()
+			location.href='../index.html'
+		})
+</script>
+</body>
+</html>
