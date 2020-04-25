@@ -97,9 +97,9 @@ footer {
 <footer>
   <p>Footer</p>
 </footer>
+
 <script>
 	$('#join_button')
-		.css('cursor', 'pointer')
 		.click( e=> {
 			e.preventDefault()
 			location.href='/member/join.html'
@@ -113,13 +113,14 @@ footer {
 				type:'post',
 				data:JSON.stringify({
 					userid:$('#userid').val(),
-					password:$('#password').val()
+					password:$('#password').val()}),
 				dataType:'json',
 				contentType:'application/json',
 				success: d => {
 					if(d.messenger === 'SUCCESS'){
 						alert(d.messenger)
-						location.href='/mypage/home'
+						sessionStorage.setItem('userid', d.member.userid)
+						location.href='/mypage/home.html'
 					}else{
 						alert(d.messenger)
 						location.href='#'
@@ -129,7 +130,6 @@ footer {
 					alert(req.status+'\n'+req.responseText+'\n'+error)
 				}
 				
-				})
 			})
 		})
 </script>

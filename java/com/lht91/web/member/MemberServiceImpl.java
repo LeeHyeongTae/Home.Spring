@@ -39,4 +39,9 @@ public class MemberServiceImpl implements MemberService{
 	public Member detail(String userid) {
 		return (Member) map.get(userid);
 	}
+
+	@Override
+	public boolean check(String userid) {
+		return map.containsKey(userid);
+	}
 }

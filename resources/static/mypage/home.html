@@ -72,7 +72,7 @@ footer {
 </head>
 <body>
 	<header>
-		<h2>회원 가입</h2>
+		<h2>My Page</h2>
 	</header>
 
 	<section>
@@ -85,14 +85,13 @@ footer {
 		<article>
 			<form action="#">
 				<label>ID </label> <br> <input id="userid" type="text" /> <br>
-				<input id="idcheck"/><br>
 				<label>PASSWORD</label><br> <input id="password" type="text" /><br>
 				<label>NAME </label> <br> <input id="name" type="text" /> <br>
 				<label>SSN</label><br> <input id="ssn" type="text" /><br>
 				<label>ADDRESS</label><br> <input id="address" type="text" /><br>
 
-				<input id="join_button" type="button" value="Join"> <input
-					id="cancel_button" type="button" value="Cancel">
+				<input id="update_button" type="button" value="Update"> 
+				<input id="exit_button" type="button" value="Exit">
 			</form>
 		</article>
 	</section>
@@ -101,61 +100,42 @@ footer {
 		<p>Footer</p>
 	</footer>
 	<script>
-	
-	$('#userid').keyup(function () {
-		if($('#userid').val() != ''){
-		$.ajax({
-			url:'/member/idchek',
-			type:'post',
-			data: $('#userid').val(),
-			dataType:'json',
-			contentType:'application/json',
-			success: d=> {
-				$('#idcheck').val(d)
-			},
-			error: (req,x,error) => {
-				alert(req.status)
-			}
-		})
-		
-		}else{
-			
-		}
+	$.getJSON('/member/detail/'+sessionStorage.getItem('userid'), d=> {
+		$('#userid').val(d.userid)	
+		$('#password').val(d.password)	
+		$('#name').val(d.name)	
+		$('#ssn').val(d.ssn)	
+		$('#address').val(d.address)	
 	})
 	
-	$('#join_button')
-		.css('cursor', 'pointer')
-		.click( e=> {
-			e.preventDefault()
+	
+	
+	$('#update_button').click( e=> {
+		e.preventDefault()
 		$.ajax({
-			url:'/member/join',
-			type:'post',
+			url:'/member/update',
+			type:'put',
 			data:JSON.stringify({
-				userid:$('#userid').val(),
-				password:$('#password').val(),
-				name:$('#ssn').val(),
-				address:$('#address').val()
+				name : $('#name').val(),
+				password : $('#password').val(),
+				address : $('#address').val()
 			}),
 			dataType:'json',
 			contentType:'application/json',
-			success: d => {
-				if(d === 'SUCCESS'){
-					alert(d)
-					location.href='../index.html'
-				}else{
-					alert(d)
-				}
+			success: d=> {
+				alert('수정 성공')
+				location.href='#'
 			},
-			error: (req, status, error) => {
-				alert(req.status + '\n' + req.reponseText + '\n' + error)
+			error: (req, x, error) => {
+				alert(req.status)
 			}
 		})
-		})
-	$('#cancel_button')
-		.click( e=> {
-			e.preventDefault()
-			location.href='../index.html'
-		})
+	})
+	$('#exit_button').click( e=> {
+		e.preventDefault()
+		location.href='../index.html'
+		
+	})
 </script>
 </body>
 </html>
