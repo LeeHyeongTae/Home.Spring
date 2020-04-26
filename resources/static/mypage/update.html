@@ -103,7 +103,7 @@ footer {
 	<script>
 	$.getJSON('/member/detail/'+sessionStorage.getItem('userid'), d=> {
 		$('#userid').val(d.userid),
-		$('#password').val(d.password),
+		$('#password').val(d.password),		
 		$('#name').val(d.name),
 		$('#ssn').val(d.ssn),
 		$('#address').val(d.address)
@@ -138,15 +138,17 @@ footer {
 		$.ajax({
 			url:'/member/delete',
 			type:'delete',
-			data:JSON.stringify({
-			 userid : $('#userid').val(),
-			 password : $('#password').val()
+			data: JSON.stringify({
+				userid : $('#userid').val(),
+				password : $('#password').val()
 			}),
 			dataType:'json',
 			contentType:'application/json',
 			success: d => {
 				if(d === 'SUCCESS'){					
 					alert('탈퇴 성공')
+					sessionStorage.setItem('userid', '')
+					location.href='../index.html'
 				}else{
 					alert('실패')
 				}

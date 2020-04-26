@@ -47,11 +47,13 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public boolean update(Member member) {
-		return map.replace(member.getUserid(), map, member);
+		map.replace(member.getUserid(), member);
+		return true;
 	}
 
 	@Override
 	public boolean delete(Member member) {
-		return map.remove(member.getUserid(), member);
+		map.remove(member.userid);
+		return true;
 	}
 }

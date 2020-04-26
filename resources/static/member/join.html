@@ -85,7 +85,8 @@ footer {
 		<article>
 			<form action="#">
 				<label>ID </label> <br> <input id="userid" type="text" /> <br>
-				<input id="idcheck"/><br>
+				<input id="idcheck"/>
+				<br>
 				<label>PASSWORD</label><br> <input id="password" type="text" /><br>
 				<label>NAME </label> <br> <input id="name" type="text" /> <br>
 				<label>SSN</label><br> <input id="ssn" type="text" /><br>
@@ -133,7 +134,8 @@ footer {
 			data:JSON.stringify({
 				userid:$('#userid').val(),
 				password:$('#password').val(),
-				name:$('#ssn').val(),
+				name:$('#name').val(),
+				ssn:$('#ssn').val(),
 				address:$('#address').val()
 			}),
 			dataType:'json',
