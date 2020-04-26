@@ -2,136 +2,157 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Creaters</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>Spring Practice</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Style the header */
 header {
-  background-color: #666;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: white;
+	background-color: #666;
+	padding: 30px;
+	text-align: center;
+	font-size: 35px;
+	color: white;
 }
 
 /* Create two columns/boxes that floats next to each other */
 nav {
-  float: left;
-  width: 30%;
-  height: 300px; /* only for demonstration, should be removed */
-  background: #ccc;
-  padding: 20px;
+	float: left;
+	width: 30%;
+	height: 300px; /* only for demonstration, should be removed */
+	background: #ccc;
+	padding: 20px;
 }
 
 /* Style the list inside the menu */
 nav ul {
-  list-style-type: none;
-  padding: 0;
+	list-style-type: none;
+	padding: 0;
 }
 
 article {
-  float: left;
-  padding: 20px;
-  width: 70%;
-  background-color: #f1f1f1;
-  height: 300px; /* only for demonstration, should be removed */
+	float: left;
+	padding: 20px;
+	width: 70%;
+	background-color: #f1f1f1;
+	height: 300px; /* only for demonstration, should be removed */
 }
 
 /* Clear floats after the columns */
 section:after {
-  content: "";
-  display: table;
-  clear: both;
+	content: "";
+	display: table;
+	clear: both;
 }
 
 /* Style the footer */
 footer {
-  background-color: #777;
-  padding: 10px;
-  text-align: center;
-  color: white;
+	background-color: #777;
+	padding: 10px;
+	text-align: center;
+	color: white;
 }
 
 /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-@media (max-width: 600px) {
-  nav, article {
-    width: 100%;
-    height: auto;
-  }
+@media ( max-width : 600px) {
+	nav, article {
+		width: 100%;
+		height: auto;
+	}
 }
 </style>
 </head>
 <body>
-<header>
-  <h2>로그인</h2>
-</header>
 
-<section>
-  <nav>
-    <ul>
-    
-    </ul>
-  </nav>
-  
-  <article>
-   <form action="#">
-   	<label>ID </label> <br>
-   	<input id="userid" type="text"/> <br>
-   	<label>PASSWORD</label><br>
-   	<input id="password" type="text"/><br>
-   	
-   	<input id="join_button" type="button" value="Join">
-   	<input id="login_button" type="button" value="Login">
-   </form>
-  </article>
-</section>
-	
-<footer>
-  <p>Footer</p>
-</footer>
+	<header>
+		<h2>관리자 로그인</h2>
+	</header>
 
-<script>
-	$('#join_button')
-		.click( e=> {
+	<section>
+		<nav>
+			<ul>
+				<li><a id="a-join">관리자등록</a></li>
+				<li><a id="a-login">관리자접속</a></li>
+				<li><a id="a-signup">사용자가입</a></li>
+				<li><a id="a-signin">사용자로그인</a></li>
+
+			</ul>
+		</nav>
+
+		<article>
+			<form action="#">
+				<label>ID </label> <br> <input id="userid" type="text">
+				<br> <label>PASSWORD</label><br> <input id="password"
+					type="text"> <br> <input id="login-button"
+					type="button" value="로그인"> <input id="cancel-button"
+					type="button" value="취소">
+			</form>
+		</article>
+	</section>
+
+	<footer>
+		<p>Footer</p>
+	</footer>
+	<script type="text/javascript">
+		$('#a-join')
+		.css('cursor','pointer')
+		.click(e => {
 			e.preventDefault()
-			location.href='/member/join.html'
+			location.href = "/member/join.html"
 		})
-	$('#login_button')
-		.css('cursor', 'pointer')
-		.click( e=> {
+		$('#a-login')
+			.css('cursor','pointer')
+			.click(e => {
+				e.preventDefault()
+				location.href = "index.html"
+		})
+		$('#a-signup')
+			.css('cursor','pointer')
+			.click(e => {
+			e.preventDefault()
+			location.href = "../user/signup.html"
+		})
+		$('#a-signin')
+			.css('cursor','pointer')
+			.click(e => {
+			e.preventDefault()
+			location.href = "../user/signin.html"
+		})
+		$('#login-button').click(e => {
 			e.preventDefault()
 			$.ajax({
-				url:'/member/login',
-				type:'post',
-				data:JSON.stringify({
-					userid:$('#userid').val(),
-					password:$('#password').val()}),
-				dataType:'json',
-				contentType:'application/json',
-				success: d => {
-					if(d.messenger === 'SUCCESS'){
-						alert(d.messenger)
-						sessionStorage.setItem('userid', d.member.userid)
-						location.href='/mypage/home.html'
-					}else{
-						alert(d.messenger)
-						location.href='#'
-					}	
+				url : '/member/login',
+				type : 'post',
+				data : JSON.stringify({
+					userid : $('#userid').val(),
+					password : $('#password').val()
+				}),
+				dataType : 'json',
+				contentType : 'application/json',
+				success : d => {
+					if (d === 'SUCCESS') {
+						location.href = "/lotto/buy.html"
+					} else {
+						alert('로그인 실패')
+						location.href = "index.html"
+					}
 				},
-				error: (req, status, error) => {
-					alert(req.status+'\n'+req.responseText+'\n'+error)
+				error : (request,status,error) => {
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error)
 				}
-				
 			})
 		})
-</script>
+		$('#cancel-button').click(e => {
+			e.preventDefault()
+		})
+	</script>
 </body>
 </html>

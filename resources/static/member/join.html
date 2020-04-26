@@ -117,11 +117,10 @@ footer {
 			error: (req,x,error) => {
 				alert(req.status)
 			}
-		})
+		 })
 		
-		}else{
-			
-		}
+	  }
+		
 	})
 	
 	$('#join_button')
@@ -129,7 +128,7 @@ footer {
 		.click( e=> {
 			e.preventDefault()
 		$.ajax({
-			url:'/member/join',
+			url:'/user/signup',
 			type:'post',
 			data:JSON.stringify({
 				userid:$('#userid').val(),

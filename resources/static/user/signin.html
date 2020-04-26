@@ -2,9 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Creaters</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>Spring Practice</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style>
 * {
 	box-sizing: border-box;
@@ -71,37 +70,26 @@ footer {
 </style>
 </head>
 <body>
+
 	<header>
-		<h2>My Page</h2>
+		<h2>사용자 로그인</h2>
 	</header>
 
 	<section>
 		<nav>
 			<ul>
-
+				<li><a id="a-home">Home</a></li>
 			</ul>
 		</nav>
 
 		<article>
 			<form action="#">
 				<label>ID </label> <br> 
-				<input id="userid" type="text" /> 
-				<br>
+				<input id="userid" type="text"><br> 
 				<label>PASSWORD</label><br> 
-				<input id="password" type="text" />
-				<br>
-				<label>NAME </label> <br> 
-				<input id="name" type="text" /> 
-				<br>
-				<label>SSN</label><br> 
-				<input id="ssn" type="text" />
-				<br>
-				<label>ADDRESS</label><br> 
-				<input id="address" type="text" />
-				<br>
-
-				<input id="update_button" type="button" value="Update"> 
-				<input id="exit_button" type="button" value="Exit">
+				<input id="password"type="text"> <br> 
+					<input id="login-button"type="button" value="로그인"> 
+					<input id="cancel-button"type="button" value="취소">
 			</form>
 		</article>
 	</section>
@@ -109,26 +97,40 @@ footer {
 	<footer>
 		<p>Footer</p>
 	</footer>
-	<script>
-	$.getJSON('/member/detail/'+sessionStorage.getItem('userid'), d=> {
-		$('#userid').val(d.userid)	
-		$('#password').val(d.password)	
-		$('#name').val(d.name)	
-		$('#ssn').val(d.ssn)	
-		$('#address').val(d.address)	
-	})
-	
-	
-	
-	$('#update_button').click( e=> {
-		e.preventDefault()
-		location.href='update.html'
-	})
-	$('#exit_button').click( e=> {
-		e.preventDefault()
-		location.href='../index.html'
+	<script type="text/javascript">
+	$('#a-home')
+		.css('cursor','pointer')
+		.click(e => {
+			e.preventDefault()
+			location.href="../index.html"
+		})
+	$('#login-button')
+		.click(e => {
+			e.preventDefault()
+		$.ajax({
+			url:'/user/signin',
+			type:'post',
+			data: JSON.stringify({
+				userid:$('#userid').val(),
+				password:$('#password').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: d => {
+				if(d.messenger === 'SUCCESS'){
+					sessionStorage.setItem('userid',d.user.userid)
+					location.href='mypage.html'
+				}else{
+					alert(d.messenger)
+					location.href='signin.html'
+				}
+			},
+			error: (req, status, error) => {
+				alert(req.status+'\n'+req.responseText+'\n'+error)
+			}
+		})
 		
 	})
-</script>
+	</script>
 </body>
 </html>
