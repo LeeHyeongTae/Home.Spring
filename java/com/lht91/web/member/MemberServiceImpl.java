@@ -44,4 +44,14 @@ public class MemberServiceImpl implements MemberService{
 	public boolean check(String userid) {
 		return map.containsKey(userid);
 	}
+
+	@Override
+	public boolean update(Member member) {
+		return map.replace(member.getUserid(), map, member);
+	}
+
+	@Override
+	public boolean delete(Member member) {
+		return map.remove(member.getUserid(), member);
+	}
 }

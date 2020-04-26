@@ -72,7 +72,7 @@ footer {
 </head>
 <body>
 	<header>
-		<h2>My Page</h2>
+		<h2>My page / Update</h2>
 	</header>
 
 	<section>
@@ -91,6 +91,7 @@ footer {
 				<label>ADDRESS</label><br> <input id="address" type="text" /><br>
 
 				<input id="update_button" type="button" value="Update"> 
+				<input id="delete_button" type="button" value="Delete"> 
 				<input id="exit_button" type="button" value="Exit">
 			</form>
 		</article>
@@ -101,23 +102,59 @@ footer {
 	</footer>
 	<script>
 	$.getJSON('/member/detail/'+sessionStorage.getItem('userid'), d=> {
-		$('#userid').val(d.userid)	
-		$('#password').val(d.password)	
-		$('#name').val(d.name)	
-		$('#ssn').val(d.ssn)	
-		$('#address').val(d.address)	
+		$('#userid').val(d.userid),
+		$('#password').val(d.password),
+		$('#name').val(d.name),
+		$('#ssn').val(d.ssn),
+		$('#address').val(d.address)
 	})
-	
-	
 	
 	$('#update_button').click( e=> {
 		e.preventDefault()
-		location.href='update.html'
+		$.ajax({
+			url:'/member/update',
+			type:'put',
+			data:JSON.stringify({
+				userid : $('#userid').val(),
+				password : $('#password').val(),
+				name : $('#name').val(),
+				ssn : $('#ssn').val(),
+				address : $('#address').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: d=> {
+				alert('수정 성공')
+				location.href='home.html'
+			},
+			error: (req, x, error) => {
+				alert(req.status)
+			}
+		})
 	})
-	$('#exit_button').click( e=> {
+	
+	$('#delete_button').click( e=>{
 		e.preventDefault()
-		location.href='../index.html'
-		
+		$.ajax({
+			url:'/member/delete',
+			type:'delete',
+			data:JSON.stringify({
+			 userid : $('#userid').val(),
+			 password : $('#password').val()
+			}),
+			dataType:'json',
+			contentType:'application/json',
+			success: d => {
+				if(d === 'SUCCESS'){					
+					alert('탈퇴 성공')
+				}else{
+					alert('실패')
+				}
+			},
+			error: (req, x, error) => {
+				alert(req.status)
+			}
+		})
 	})
 </script>
 </body>

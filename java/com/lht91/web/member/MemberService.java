@@ -12,4 +12,8 @@ public interface MemberService {
 
 	public boolean check(String userid);
 
+	boolean update(Member member);
+
+	boolean delete(Member member);
+
 }
