@@ -72,7 +72,7 @@ footer {
 </head>
 <body>
 	<header>
-		<h2>회원 가입</h2>
+		<h2>관리자 등록</h2>
 	</header>
 
 	<section>
@@ -128,7 +128,7 @@ footer {
 		.click( e=> {
 			e.preventDefault()
 		$.ajax({
-			url:'/user/signup',
+			url:'/member/join',
 			type:'post',
 			data:JSON.stringify({
 				userid:$('#userid').val(),

@@ -138,8 +138,9 @@ footer {
 				dataType : 'json',
 				contentType : 'application/json',
 				success : d => {
-					if (d === 'SUCCESS') {
-						location.href = "/lotto/buy.html"
+					if (d.messenger === 'SUCCESS') {
+						sessionStorage.setItem('userid', d.member.userid)
+						location.href = "/member/list.html"
 					} else {
 						alert('로그인 실패')
 						location.href = "index.html"

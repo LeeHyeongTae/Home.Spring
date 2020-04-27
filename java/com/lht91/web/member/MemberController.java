@@ -59,4 +59,5 @@ public class MemberController {
 	public Messenger delete(@RequestBody Member member) {
 		return (memberService.delete(member)) ? Messenger.SUCCESS:Messenger.FAIL;
 	}
+	 
 }

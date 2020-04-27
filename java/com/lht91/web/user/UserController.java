@@ -48,7 +48,6 @@ public class UserController {
 	
 	@PutMapping("/update")
 	public Messenger update(@RequestBody User user) {
-		System.out.println("update 정보::: "+user);
 		return (userService.update(user)) ? Messenger.SUCCESS:Messenger.FAIL;
 	}
 	
@@ -57,4 +56,5 @@ public class UserController {
 		return (userService.remove(userid)) ? Messenger.SUCCESS:Messenger.FAIL;
 		
 	}
+	
 }
