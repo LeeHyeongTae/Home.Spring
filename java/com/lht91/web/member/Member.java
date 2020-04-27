@@ -1,8 +1,14 @@
 package com.lht91.web.member;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter @Setter
 public class Member {
-	String userid, password, name, ssn, address;
+	String userid, name, password, ssn, address;
+	
+	@Override
+	public String toString() {
+		return String.format("%s,%s,%s,%s,%s", userid,name,password,ssn,address);
+	}
 }

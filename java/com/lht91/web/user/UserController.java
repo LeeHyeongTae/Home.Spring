@@ -1,6 +1,7 @@
 package com.lht91.web.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,15 @@ public class UserController {
 	@PostMapping("/signup")
 	public Messenger signup(@RequestBody User user) {
 		int count = userService.count();
-		userService.signup(user);
-		return (userService.count()==count+1)?Messenger.SUCCESS:Messenger.FAIL;
+		userService.saveFile(user);
+//		return (userService.count()==count+1)?Messenger.SUCCESS:Messenger.FAIL;
+		return Messenger.SUCCESS;
+	}
+	
+	@GetMapping("/list")
+	public List<User> list(){
+//		return userService.list();
+		return userService.readFile();
 	}
 	
 	@PostMapping("/signin")
@@ -54,7 +62,6 @@ public class UserController {
 	@DeleteMapping("/remove/{userid}")
 	public Messenger remove(@PathVariable String userid) {
 		return (userService.remove(userid)) ? Messenger.SUCCESS:Messenger.FAIL;
-		
 	}
 	
 }
