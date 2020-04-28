@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -114,8 +115,9 @@ public class UserServiceImpl implements UserService{
 		}catch(Exception e){
 			System.out.println("파일 읽기에서 에러 발생");
 		}
-		User u = new User();
+		User u = null;
 		for(int i=0; i<list.size(); i++) {
+			u = new User();
 			String[] arr = list.get(i).split(",");
 			u.setUserid(arr[0]);
 			u.setName(arr[1]);
@@ -125,6 +127,19 @@ public class UserServiceImpl implements UserService{
 			userList.add(u);
 		}
 		return userList;
+	}
+
+	@Override
+	public boolean idCheck(String userid) {
+		boolean checkResult = false;
+		List<User> userlist = readFile();
+		for(int i=0; i<userlist.size(); i++) {
+			signup(userlist.get(i));
+		}
+		if(map.containsKey(userid)) {
+			checkResult = true;
+		}
+		return checkResult;
 	}
 	
 }

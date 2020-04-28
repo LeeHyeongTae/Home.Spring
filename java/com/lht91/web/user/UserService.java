@@ -21,4 +21,6 @@ public interface UserService {
 	
 	public List<User> readFile();
 
+	public boolean idCheck(String userid);
+
 }

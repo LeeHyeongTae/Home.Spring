@@ -22,9 +22,8 @@ public class MemberController {
 	
 	@PostMapping("/join")
 	public Messenger join(@RequestBody Member member) {
-		int count = memberService.count();
-		memberService.join(member);
-		return (memberService.count()==count+1)? Messenger.SUCCESS:Messenger.FAIL;
+		memberService.saveFile(member);
+		return Messenger.SUCCESS;
 	}
 	
 	@PostMapping("/login")

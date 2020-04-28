@@ -21,9 +21,14 @@ import com.lht91.web.util.Messenger;
 public class UserController {
 	@Autowired UserService userService;
 	
+	@GetMapping("/idcheck/{userid}")
+	public Messenger idCheck(@PathVariable String userid) {
+		return (userService.idCheck(userid))? Messenger.FAIL:Messenger.SUCCESS;
+	}
+	
 	@PostMapping("/signup")
 	public Messenger signup(@RequestBody User user) {
-		int count = userService.count();
+//		int count = userService.count();
 		userService.saveFile(user);
 //		return (userService.count()==count+1)?Messenger.SUCCESS:Messenger.FAIL;
 		return Messenger.SUCCESS;

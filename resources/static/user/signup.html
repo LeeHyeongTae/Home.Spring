@@ -87,7 +87,7 @@ footer {
    	<input id="name" type="text"/> <br>
    	<label>ID</label><br>
    	<input id="userid" type="text"> <br>
-   	<input id="idcheck"/><br>
+   	<input id="idcheck" type="text"> <br>
    	<label>PASSWORD</label><br>
    	<input id="password" type="text"> <br>
    	<label>SSN</label><br>
@@ -111,23 +111,12 @@ footer {
 		location.href="../index.html"
 	})
 	
-	$('#userid').keyup(function () {
+	$('#userid').keyup(e => {
 		if($('#userid').val() != ''){
-		$.ajax({
-			url:'/member/idchek',
-			type:'post',
-			data: $('#userid').val(),
-			dataType:'json',
-			contentType:'application/json',
-			success: d=> {
+		$.getJSON('/user/idcheck/'+$('#userid').val(), d => {
 				$('#idcheck').val(d)
-			},
-			error: (req,x,error) => {
-				alert(req.status)
-			}
-		 })
-		
-	  }
+			})
+	   }
 		
 	})
 	
